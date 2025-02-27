@@ -58,7 +58,7 @@ const MapModule = (props) => {
     useEffect(() => {
         const loadBaiduMapSDK = () => {
             const script = document.createElement('script');
-            script.src = 'https://api.map.baidu.com/api?v=3.0&ak=Ql6g9FMhKC8AQhzbPG7erzSwCEAMmCCP';
+            script.src = 'https://api.map.baidu.com/api?自己的ak';
             script.onload = () => {
                 console.log('百度地图 SDK 加载完成');
                 initMap();
