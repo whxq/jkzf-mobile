@@ -1,0 +1,35 @@
+.cityList_box {
+
+    height: 100vh;
+    overflow: hidden;
+
+    &>div {
+        width: 100%;
+    }
+
+    .list_box {
+        flex: 1;
+        overflow-y: scroll;
+    }
+
+    .adm-index-bar-anchor-title {
+        font-weight: 600;
+        color: #000;
+        font-size: 15px;
+    }
+
+    // 右侧索引样式
+    .adm-index-bar-sidebar {
+        font-size: 15px;
+        font-weight: 600;
+        color: #676767;
+        height: 95%;
+        padding-top: 20px;
+    }
+
+    .adm-index-bar-sidebar-row {
+        height: 30px;
+    }
+
+
+}
