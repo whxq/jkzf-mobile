@@ -113,8 +113,8 @@ const Publish = (props) => {
     // 获取当前定位城市小区列表
     const getCommunityList = async () => {
         try {
-            // let res = await getAreaCommunity({ name: communityValue, id: Storage.get('location').value })
-            let res = await getAreaCommunity({ name: communityValue, id: 'AREA|88cff55c-aaa4-e2e0' })
+            let res = await getAreaCommunity({ name: communityValue, id: Storage.get('location').value })
+            // let res = await getAreaCommunity({ name: communityValue, id: 'AREA|88cff55c-aaa4-e2e0' })
             //// 获取当前位置出现问题，获取不了location
 
             setCommunityList(res.data.body)
@@ -145,7 +145,7 @@ const Publish = (props) => {
                         maskClickable: false,
                         afterClose: () => { navigate(-1) }
                     })
-                } catch (err) { }
+                } catch (err) { Toast.info('服务器偷懒了，请稍后再试~', 2, null, false) }
             },
         })
     }

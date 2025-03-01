@@ -42,6 +42,8 @@ const MapModule = (props) => {
     // const locationData = Storage.get('location')
     const locationData = Storage.get('location')
 
+
+
     // 缓存页面函数，激活时触发
     useActivate(() => {
         setVisible(true)
@@ -58,7 +60,7 @@ const MapModule = (props) => {
     useEffect(() => {
         const loadBaiduMapSDK = () => {
             const script = document.createElement('script');
-            script.src = 'https://api.map.baidu.com/api?自己的ak';
+            script.src = 'https://api.map.baidu.com/api?v=3.0&ak=Ql6g9FMhKC8AQhzbPG7erzSwCEAMmCCP';
             script.onload = () => {
                 console.log('百度地图 SDK 加载完成');
                 initMap();
@@ -73,8 +75,8 @@ const MapModule = (props) => {
     }, []);
     // 监听到 map 数据变化后再进行创建覆盖物
     useEffect(() => {
-        // if (map != null) getAreaHomeList(locationData.value)
-        if (map != null) getAreaHomeList('AREA|27e414ce-a7e1-fd99')
+        if (map != null) getAreaHomeList(locationData.value)
+        // if (map != null) getAreaHomeList('AREA|27e414ce-a7e1-fd99')
     }, [map])
     // 初始化地图
     const initMap = () => {
@@ -205,6 +207,7 @@ const MapModule = (props) => {
         if (housesList.length > 0) {
             return <HousesList list={housesList}></HousesList>
         } else {
+            //loading加载优化
             return (
                 <div className='flex_col flex_ctr' style={{ height: '100%' }}>
                     <SpinLoading color='primary' />

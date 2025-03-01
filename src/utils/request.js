@@ -4,9 +4,9 @@
 import { Toast, Dialog } from 'antd-mobile'
 import axios from 'axios'
 import Storage from '@/utils/storage'
-import qs from "qs";
+// import qs from "qs";
 import { history } from '@/utils/history';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 export const baseURL = 'http://localhost:8080'
 
@@ -47,15 +47,15 @@ request.interceptors.response.use(
     (response) => {
         // console.log('response：', response.data)
         const status = response.data.status
-        let message = "";
+        let message = " ";
         if (status < 200 || status >= 300) {
             Toast.show({ content: response.data.description, position: 'top' })
             // 处理http错误，抛到业务代码
-            message = showStatus(status)
+             message = showStatus(status)
 
             //拦截异常（通知）
             // Notification({ title: '提示', message: message, type: 'error' })
-            if (response.data.description == 'token异常或者过期' && response.data.status === 400) {
+            if (response.data.description === 'token异常或者过期' && response.data.status === 400) {
                 Storage.clearUserInfo()
                 //路由跳转
                 Dialog.confirm({
