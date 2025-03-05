@@ -8,13 +8,13 @@ import { getHousesList } from '@/api/house'
 import paramsData from "./params";
 import HousesList from "@/components/houses-list";
 import './index.scss'
-
+import getCityId from '@/utils/getCityId'
 const List = () => {
     const navigate = useNavigate()
     // 获取本地缓存定位数据
     const cityName = Storage.get('location').label
     const processedCityName = cityName.replace("市", ""); //和城市列表里面的城市名对应，都不要加“市”字
-    const cityId = Storage.get('location').value
+    let cityId = Storage.get('location').value
     const [activeKey, setActiveKey] = useState('roomType')
     // 城市区域列表
     const [areaList, setAreaList] = useState([])
@@ -51,15 +51,8 @@ const List = () => {
         try {
             if (!cityId) {
                 //根据定位获取城市id为空，所以加了个判断如果id为空则根据城市名查找对应id，再根据id查找城市区域信息
-                let res1 = await getAreaInfo({ name: processedCityName })
-                // console.log(processedCityName);
-
-                const Id = res1.data.body.value
-                // console.log(Id);
-
-                let res = await getAreaChildList({ id: Id })
-                // const testCityId = 'AREA|ceb9b4d6-c3dc-e4da';
-                // const res = await getAreaChildList({ id: testCityId })
+                cityId = await getCityId();
+                let res = await getAreaChildList({ id: cityId })
                 setAreaList(res.data.body)
             } else {
                 let res = await getAreaChildList({ id: cityId })

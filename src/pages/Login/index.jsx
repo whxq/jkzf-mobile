@@ -73,7 +73,7 @@ const Login = () => {
             <div className='login_content flex_col  pd-lr-40'>
                 <div className='flex_col flex_ctr login_log'>
                     <Image src={LogoImg} width={70} height={70} fit='cover' style={{ borderRadius: 35 }} />
-                    <span>好客租房</span>
+                    <span>极客租房</span>
                 </div>
 
                 <Divider>Welcome</Divider>

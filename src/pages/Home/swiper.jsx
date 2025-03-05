@@ -13,6 +13,8 @@ const Search = (props) => {
     const cityName = Storage.get('location')?.label || '上海'
     // const cityName = Storage.get('location').label
     //location获取不到？
+    console.log( Storage.get('location'));
+    
 
     // 路由跳转
     const navigate = useNavigate()

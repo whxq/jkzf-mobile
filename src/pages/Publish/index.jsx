@@ -8,6 +8,7 @@ import { getAreaCommunity } from '@/api/area'
 import { baseURL } from '@/utils/request'
 import Storage from '@/utils/storage'
 import './index.scss'
+import getCityId from '@/utils/getCityId'
 
 const TextMsg = (props) => {
     return (
@@ -111,11 +112,17 @@ const Publish = (props) => {
         setDataForm(Object.assign({}, dataForm, { houseImg: houseImg.join('|') }))
     }
     // 获取当前定位城市小区列表
+    //定义城市id
+    let cityId = Storage.get('location').value
     const getCommunityList = async () => {
         try {
-            let res = await getAreaCommunity({ name: communityValue, id: Storage.get('location').value })
+            if (!cityId) {
+                cityId = await getCityId();
+            }
+            //根据定位获取当前城市id为空
+            let res = await getAreaCommunity({ name: communityValue, id: cityId })
             // let res = await getAreaCommunity({ name: communityValue, id: 'AREA|88cff55c-aaa4-e2e0' })
-            //// 获取当前位置出现问题，获取不了location
+            //获取当前位置出现问题，获取不了location
 
             setCommunityList(res.data.body)
             console.log(res.data.body);

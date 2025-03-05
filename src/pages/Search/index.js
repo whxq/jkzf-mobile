@@ -167,19 +167,20 @@
 // };
 
 // export default Search;
-import React, { useState, useEffect, useCallback } from 'react';
-import { SearchBar } from 'antd-mobile';
+import React, { useState, useCallback } from 'react';
+import { SearchBar, Dialog } from 'antd-mobile';
 import { getAreaCommunity } from '@/api/area';
 import Storage from '@/utils/storage';
 import styles from './index.module.css';
 import { useNavigate } from 'react-router-dom'; // 使用 useNavigate 钩子
-import params from '../List/params';
+// import params from '../List/params';
+import getCityId from '@/utils/getCityId'
 
 
 const Search = () => {
   // 获取存储中的城市 ID
   const res = Storage.get('location');
-  const cityId = res?.value; // 确保 res 不是 undefined 时才访问 .value
+  let cityId = res?.value; // 确保 res 不是 undefined 时才访问 .value
 
   // 状态管理
   const [searchTxt, setSearchTxt] = useState('');
@@ -188,6 +189,11 @@ const Search = () => {
 
   // 获取 navigate 函数
   const navigate = useNavigate();
+
+  //定义城市id
+  // let cityId = Storage.get('location').value
+  // const cityName = Storage.get('location').label
+  // const processedCityName = cityName.replace("市", ""); //和城市列表里面的城市名对应，都不要加“市”字
 
   // 处理搜索文本框的变化
   const handleSearchTxt = useCallback((value) => {
@@ -207,10 +213,13 @@ const Search = () => {
     // 设置新的定时器
     setTimerId(setTimeout(async () => {
       try {
+        //这里cityId也是为空的
+        if (!cityId) {
+          cityId = await getCityId();
+        }
         const response = await getAreaCommunity({ name: value, id: cityId });
         setTipsList(response.data.body);
         console.log(response.data.body);
-        
       } catch (error) {
         console.error('搜索小区信息失败:', error);
       }
@@ -220,14 +229,22 @@ const Search = () => {
   // 处理搜索提示项的点击事件
   const onTipsClick = useCallback((item) => {
     // 使用 navigate 进行路由跳转，并传递 state
-    console.log(item);//拿到该小区信息
-    
-    navigate('/user/rental', {
-      state: {
-        name: item.communityName,
-        id: item.community,
-      },
-    });
+    // console.log(item);//拿到该小区信息
+    if (!Storage.get('token')) {
+      Dialog.confirm({
+        content: '您还未登录，是否确认去登录？',
+        onConfirm: async () => {
+          navigate('/login', { state: { type: 'back' } })
+        },
+      })
+      // return //这里的return 表示退出onTipsClick函数
+    } 
+      navigate('/user/rental', {
+        state: {
+          name: item.communityName,
+          id: item.community,
+        },
+      });
   }, [navigate]);
 
   // 渲染搜索提示列表

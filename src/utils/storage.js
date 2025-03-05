@@ -21,6 +21,7 @@
  * @param  {[type]} k [键名]  
  * @param  {[type]} v [键值]  
  */
+// import { getAreaInfo } from "@/api/area";
 function set(k, v) {
     let data = JSON.stringify([new Date(), v])
     window.localStorage.setItem(k, data)
@@ -40,6 +41,33 @@ function get(k, def) {
         return def;
     }
 }
+// async function get(k, def) {
+//     let res = window.localStorage.getItem(k);
+
+
+//     if (res) {
+//         let data = JSON.parse(res)[1]; // 获取存储的对象
+//         console.log(data);
+
+//         // 如果 value 为空，则根据 label 获取 id
+
+//             let labelWithoutCity = data.label.replace("市", "");  // 去掉 "市" 字符
+//             const res1 = await getAreaInfo({ name: labelWithoutCity });
+//             data.value = res1.data.body.value // 获取 id
+//             // console.log(data.value);
+
+
+
+//         // 如果没有获取到 id，使用默认值（可以为空或者某个默认值）
+//         console.log(data);
+
+
+//         return data;
+//     } else {
+//         if (def == undefined || def == "") def = false;
+//         return def;
+//     }
+// }
 
 /**  
  * 清楚某个缓存   
@@ -71,3 +99,4 @@ export default {
     clear,
     clearUserInfo
 }
+//这里默认导出的是一个对象,名字Storage可以自己定义，然后调用里面的这些方法
